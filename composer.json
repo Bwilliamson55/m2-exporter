@@ -1,0 +1,23 @@
+{
+    "name": "bwilliamson/module-exporter",
+    "description": "Dynamic exporter for custom destination types",
+    "require": {
+        "php": "~7.4.0",
+        "magento/framework": "100.0.*"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Bwilliamson\\Exporter\\": ""
+        }
+    }
+}
+
