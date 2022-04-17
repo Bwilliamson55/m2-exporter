@@ -79,6 +79,8 @@ class Json extends AbstractAdapter
      * Method called as last step of object instance creation. Can be overridden in child classes.
      *
      * @return $this
+     * @throws FileSystemException
+     * @throws ValidatorException
      */
     protected function _init(): Json
     {
@@ -128,7 +130,7 @@ class Json extends AbstractAdapter
     }
 
     /**
-     * Write row data to source file.
+     * Write row data to class property array
      *
      * @param array $rowData
      * @throws Exception
