@@ -48,7 +48,7 @@ class RestService
         $status = $response->getStatusCode(); // 2/3/4/500 codes
         $responseBody = $response->getBody();
         $responseContent = $responseBody->getContents(); // responseContent is in JSON
-        // Add your logic using $responseContent
+        // logic
     }
 
     /**

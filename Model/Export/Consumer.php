@@ -50,14 +50,17 @@ class Consumer
      */
     public function process(ExportInfoInterface $exportInfo)
     {
-        $is_json = $exportInfo->getFileFormat() == ('json' || 'rest');
+        $is_json = in_array($exportInfo->getFileFormat(), ['json', 'rest']);
+        // Extend the export controller to add details to the export_filter array
+        // deserialize the export filter here to grab that info, pop that key, and re-serialize
+        // Extending the export form with more fields should allow for this
         try {
             $data = $this->exportManager->export($exportInfo);
 
             //if json- then look deeper and divert to fake filetypes like REST/Graphql
             if ($is_json) {
                 $this->logger->critical('JSON export would happen here with this json: ' . $data);
-            } else {
+            } else { // we could also write files locally as a backup. It's just a string
                 $fileName = $exportInfo->getFileName();
                 $directory = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_IMPORT_EXPORT);
                 $directory->writeFile('export/' . $fileName, $data);

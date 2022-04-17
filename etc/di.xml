@@ -3,4 +3,8 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\ImportExport\Model\Export\Consumer" type="Bwilliamson\Exporter\Model\Export\Consumer"/>
     <preference for="Magento\ImportExport\Model\Export" type="Bwilliamson\Exporter\Model\Export"/>
+    <preference for="Magento\ImportExport\Block\Adminhtml\Export\Edit\Form" type="Bwilliamson\Exporter\Block\Adminhtml\Export\Edit\Form"/>
+    <type name="Magento\ImportExport\Controller\Adminhtml\Export\Export">
+        <plugin name="bwilliamson_exporter_before_export" type="Bwilliamson\Exporter\Plugin\BeforeExport"/>
+    </type>
 </config>
