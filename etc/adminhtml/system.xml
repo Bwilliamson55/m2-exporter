@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bwilliamson" translate="label" sortOrder="10">
+            <label>Bwilliamson</label>
+        </tab>
+        <section id="bwilliamson_exporter" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <tab>bwilliamson</tab>
+            <label>Custom Exporter Config</label>
+            <resource>Magento_ImportExport::export</resource>
+            <group id="api_config" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>API Configuration</label>
+                <field id="base_uri" translate="label" type="text" sortOrder="15" showInDefault="1" canRestore="1">
+                    <label>Rest API base URI</label>
+                    <comment>E.g. https://api.clickup.com/api/v2/</comment>
+                </field>
+                <field id="api_key" translate="label" type="text" sortOrder="15" showInDefault="1">
+                    <label>Api Key</label>
+                </field>
+                <field id="list_id" translate="label" type="text" sortOrder="15" showInDefault="1">
+                    <label>List ID</label>
+                    <comment>The number at the end of the url when sharing a list</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -33,7 +33,8 @@ class RestService
     /**
      * Example usage
      */
-    public function execute(): void
+    /**
+    public function execute1(): void
     {
         $repositoryName = 'magento/magento2';
         $response = $this->doRequest(
@@ -42,17 +43,30 @@ class RestService
             ['headers' => [
                 'Authorization' => 'Bearer ' . 'my_token',
                 'Content-Type' => 'Application/Json'
-            ]], //see GuzzleHttp\RequestOptions for more options
-            'post'
+                ],
+                'body' => 'dataStuff' // use 'json' if you want an array encoded for you
+            ], //see GuzzleHttp\RequestOptions for more options
+            'post' //put post get delete
         );
         $status = $response->getStatusCode(); // 2/3/4/500 codes
         $responseBody = $response->getBody();
         $responseContent = $responseBody->getContents(); // responseContent is in JSON
         // logic
     }
+     */
+
+    public function execute(array $array): Response
+    {
+        return $this->doRequest(
+            $array['base_uri'] ?? '',
+            $array['uri_endpoint'] ?? '',
+            $array['params'] ?? [],
+            $array['method'] ?? '',
+        );
+    }
 
     /**
-     * Do API request with provided params
+     * Do API request using parameters provided
      *
      * @param string $apiRequestUri
      * @param string $uriEndpoint
@@ -61,7 +75,7 @@ class RestService
      *
      * @return Response
      */
-    private function doRequest(
+    public function doRequest(
         string $apiRequestUri,
         string $uriEndpoint,
         array $params = [],
@@ -77,7 +91,6 @@ class RestService
                 $params
             );
         } catch (GuzzleException $exception) {
-            /** @var Response $response */
             $response = $this->responseFactory->create([
                 'status' => $exception->getCode(),
                 'reason' => $exception->getMessage()

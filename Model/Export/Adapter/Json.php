@@ -11,34 +11,31 @@ use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
 use Magento\ImportExport\Model\Export\Adapter\AbstractAdapter;
 use Magento\Framework\Filesystem;
 
-
 /**
- * Export adapter json.
+ * Json export adapter.
  */
 class Json extends AbstractAdapter
 {
     protected string $_delimiter = ',';
-    protected string $_enclosure = '"';
     protected Write $_fileHandler;
     private array $_jsonData;
     private JsonSerializer $serializer;
 
     public function __construct(
         Filesystem $filesystem,
-        $destination,
-        $destinationDirectoryCode,
         JsonSerializer $serializer,
-        array $jsonData = []
+        array $jsonData = [],
+        $destination = null,
+        $destinationDirectoryCode = DirectoryList::VAR_IMPORT_EXPORT
     ) {
-        $destination = null;
-        $destinationDirectoryCode = DirectoryList::VAR_IMPORT_EXPORT;
         parent::__construct($filesystem, $destination, $destinationDirectoryCode);
         $this->serializer = $serializer;
         $this->_jsonData = $jsonData;
     }
 
     /**
-     * Object destructor
+     * @throws FileSystemException
+     * @throws ValidatorException
      */
     public function __destruct()
     {
@@ -52,7 +49,7 @@ class Json extends AbstractAdapter
      * @throws FileSystemException
      * @throws ValidatorException
      */
-    public function destruct()
+    public function destruct(): void
     {
         if (is_object($this->_fileHandler)) {
             $this->_fileHandler->close();
@@ -124,7 +121,7 @@ class Json extends AbstractAdapter
             foreach ($headerColumns as $columnName) {
                 $this->_headerCols[$columnName] = false;
             }
-            $this->_jsonData['headers'] = $this->_headerCols;
+            $this->_jsonData['column_headers'] = $this->_headerCols;
         }
         return $this;
     }
@@ -146,8 +143,12 @@ class Json extends AbstractAdapter
         return $this;
     }
 
-    public function getContents(): string
+    /**
+     * @param bool $exportAsArray
+     * @return array|bool|string
+     */
+    public function getContents(bool $exportAsArray = false)
     {
-        return ($this->serializer->serialize($this->_jsonData));
+        return $exportAsArray ? $this->_jsonData : $this->serializer->serialize($this->_jsonData);
     }
 }

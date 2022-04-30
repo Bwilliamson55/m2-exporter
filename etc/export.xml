@@ -1,5 +1,15 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_ImportExport:etc/export.xsd">
-    <fileFormat name="rest" label="REST" model="Bwilliamson\Exporter\Model\Export\Adapter\Json" />
+    <entity
+        name="clickup_customer"
+        label="Clickup Customers"
+        model="Bwilliamson\Customer\Model\Export\ClickupCustomer"
+        entityAttributeFilterType="customer"
+    />
+    <fileFormat
+        name="rest_customers_clickup"
+        label="Clickup API- Update Customers"
+        model="Bwilliamson\Exporter\Model\Export\Adapter\Json"
+    />
 </config>
